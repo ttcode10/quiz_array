@@ -5,63 +5,49 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      .container {
-        display: flex;
-        flex-direction: column;
-      }
-
-      .array {
-        width: 200px;
-        margin: 10px;
-      }
-
-      .target {
-        width: 200px;
-        margin: 10px;
-      }
-
-      button {
-        width: 200px;
-        margin: 10px;
-      }
-    </style>
+    <link rel="stylesheet" href="">
   </head>
   <body>
-
-    <h1>JS Quiz 2020-07-07</h1>
-    <div class="container">
-      <h3>Array</h3>
-      <input type="text" class="array" placeholder="Please input a random array">
-      <h3>Target number</h3>
-      <input type="text" class="target" placeholder="Set a target number">
-      <button onclick="getSum()" >Go</button>
-      <ul class="answer"></ul>
-    </div>
-
     <script>
-      const getDom = element => document.querySelector(element);
+      // Quiz-1
+      // 在0-100之间，找出前十个，是4的倍数，但不是5的倍数的数字。(可尝试运用break和 continue)
+      const tenNumbers = [];
 
-      const getSum = () => {
-        const array = getDom('.array').value.split(',').map(item => parseInt(item));
-        const target = parseInt(getDom('.target').value);
-
-        console.log(array, target);
-
-        for (var x = 0; x < array.length; x++) {
-          for (var y = x; y < array.length; y++) {
-            if (array[x] + array[y] === target) {
-              let newList = document.createElement('li'); 
-              let newContent = document.createTextNode(`${array[x]} (index: ${array.indexOf(array[x])}) + ${array[y]} (index: ${array.indexOf(array[y])}) = ${target}`); 
-              newList.appendChild(newContent);
-              let answerArea = getDom('.answer');
-              document.body.appendChild(newList, answerArea);
-            }
+      const findNumbers = () => {
+        for (i=0; i<100; i+=4) {
+          if (i%5 !== 0) {
+            tenNumbers.push(i);
+            if (tenNumbers.length === 10) break;
           }
         }
       }
+      findNumbers();
+      console.log(tenNumbers);
+
+      // Quiz 2
+      // 在一个升序,无重复数的数组中，给定一个目标值，找出哪两个数的和为这个目标值(任意一个组合)，并返回这两个数的序号(index) 要求:写一个function， 输入为一个数组和一个数字，输出为⻓度为2的数组
+
+      const findCombination = (array, target) => {
+        let x = 0;
+        let y = array.length - 1;
+        const output = [];
+        while (array[x] !== array[y]) {
+          if (array[x] + array[y] < target) {
+            x++;
+          } else if (array[x] + array[y] > target) {
+            y--;
+          } else if (array[x] + array[y] === target) {
+            output.push(x, y);
+            console.log(output);
+            break;
+          }
+        }
+      }
+
+      const givenArray = [1,3,4,6,7,8,10,14,15]
+      const targetNumber = 14
+      findCombination(givenArray, targetNumber);
+
     </script>
   </body>
 </html>
-
-<!-- 1, 3, 4, 6, 7, 8, 10, 14, 15 -->
